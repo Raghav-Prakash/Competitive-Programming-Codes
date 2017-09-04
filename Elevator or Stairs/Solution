@@ -1,0 +1,70 @@
+import java.util.*;
+import java.lang.Math;
+import java.math.BigDecimal;
+
+class ElevatorsOrStairs
+{
+	private int n;
+	private int v1;
+	private int v2;
+
+	public ElevatorsOrStairs(int n, int v1, int v2)
+	{
+		this.n = n;
+		this.v1 = v1;
+		this.v2 = v2;
+	}
+
+	public String whichWay()
+	{
+		BigDecimal bigN = new BigDecimal(n);
+		BigDecimal bigV1 = new BigDecimal(v1);
+		BigDecimal bigV2 = new BigDecimal(v2);
+
+		String elevatorTime = computeElevatorTime(bigN,bigV1,bigV2);
+		String stairsTime = computeStairsTime(bigN,bigV1,bigV2);
+
+		BigDecimal bigElevatorTime = new BigDecimal(elevatorTime);
+		BigDecimal bigStairsTime = new BigDecimal(stairsTime);
+
+		return (bigElevatorTime.compareTo(bigStairsTime) == -1) ? "Elevator" : "Stairs";
+	}
+
+	private String computeElevatorTime(BigDecimal bigN, BigDecimal bigV1, BigDecimal bigV2)
+	{
+		BigDecimal bigTwo = new BigDecimal(2);
+		return ( (bigTwo.multiply(bigN)).divide(bigV2,100,1) ).toString(); // this.divide(BigDecimal val, int scale, int roundingMode)
+	}
+	private String computeStairsTime(BigDecimal bigN, BigDecimal bigV1, BigDecimal bigV2)
+	{
+		BigDecimal bigRootTwo = new BigDecimal(Math.sqrt(2));
+		return ( (bigRootTwo.multiply(bigN)).divide(bigV1,100,1) ).toString();
+	}
+}
+
+public class Main
+{
+	public static void main(String[] args) 
+	{
+		Scanner in = new Scanner(System.in);
+		int numTests = in.nextInt();
+
+		while(numTests > 0)
+		{
+			int n = in.nextInt();
+			int v1 = in.nextInt();
+			int v2 = in.nextInt();
+
+			ElevatorsOrStairs obj = new ElevatorsOrStairs(n,v1,v2);
+
+			String result = obj.whichWay();
+			print(result);
+
+			numTests--;
+		}	
+	}
+	public static void print(String result)
+	{
+		System.out.println(result);
+	}
+}
