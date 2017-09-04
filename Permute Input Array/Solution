@@ -1,0 +1,131 @@
+import java.util.*;
+import java.math.BigInteger;
+
+class PermuteInputArray
+{
+	private ArrayList<Integer> originalArray;
+
+	public PermuteInputArray(int[] input)
+	{
+		originalArray = new ArrayList<Integer>();
+
+		for(int i = 0; i < input.length; i++)
+			originalArray.add(input[i]);
+	}
+
+	public int computePermutationCount()
+	{
+		Queue<ArrayList<Integer>> queue = new LinkedList<ArrayList<Integer>>();
+		Set<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
+
+		queue.add(originalArray);
+		set.add(originalArray);
+
+		int count = 0;
+		
+		while(!queue.isEmpty())
+		{
+			count += 1;
+			ArrayList<Integer> array = (ArrayList<Integer>) queue.remove();
+
+			for(int i = 0; i < array.size()-1; i++)
+			{
+				int elemAti = array.get(i);
+				int elemAtiPlus1 = array.get(i+1);
+
+				if(elemAti > 0 && elemAtiPlus1 > 0 && (i+1) < array.size()-1) // 1st condition
+				{
+					ArrayList<Integer> newArray = conditionOne(array,i);
+
+					if(!set.contains(newArray))
+					{
+						queue.add(newArray);
+						set.add(newArray);
+					}
+				}
+				else if(elemAti > 0 && elemAtiPlus1 > 0) // 2nd condition
+				{
+					ArrayList<Integer> newArray = conditionTwo(array,i);
+					
+					if(!set.contains(newArray))
+					{
+						queue.add(newArray);
+						set.add(newArray);
+					}
+				}
+			}
+		}
+
+		return count;
+	}
+
+	private ArrayList<Integer> conditionOne(ArrayList<Integer> array, int posI)
+	{
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		int i;
+
+		for(i = 0; i < posI; i++)
+			temp.add((Integer)array.get(i));
+
+		temp.add((Integer)array.get(i)-1);
+		temp.add((Integer)array.get(i+1)-1);
+		temp.add((Integer)array.get(i+2)+1);
+
+		i += 3;
+		while(i < array.size())
+		{
+		    temp.add((Integer)array.get(i));
+		    i++;
+		}
+
+		return temp;
+	}
+
+	private ArrayList<Integer> conditionTwo(ArrayList<Integer> array, int posI)
+	{
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		int i;
+
+		for(i = 0; i < posI; i++)
+			temp.add((Integer)array.get(i));
+
+		temp.add((Integer)array.get(i)-1);
+		temp.add((Integer)array.get(i+1)-1);
+		temp.add(1);
+
+		return temp;
+	}
+}
+
+public class Main
+{
+	public static final BigInteger modulo = new BigInteger("1000000007");
+
+	public static void main(String[] args) 
+	{
+		Scanner in = new Scanner(System.in);
+		int numTests = in.nextInt();
+
+		while(numTests > 0)
+		{
+			int N = in.nextInt();
+
+			int[] input = new int[N];
+			for(int i = 0; i < N; i++)
+				input[i] = in.nextInt();
+
+			PermuteInputArray obj = new PermuteInputArray(input);
+			int result = obj.computePermutationCount();
+
+			print(result);
+
+			numTests--;
+		}	
+	}
+
+	public static void print(int result)
+	{
+		BigInteger bigResult = new BigInteger(Integer.toString(result));
+		System.out.println((bigResult.mod(modulo)).toString());
+	}
+}
