@@ -1,0 +1,118 @@
+import java.util.*;
+
+class ImplementMaxQueue
+{
+	private ArrayList<Integer> maxPriorityQueue;
+
+	public ImplementMaxQueue()
+	{
+		maxPriorityQueue = new ArrayList<Integer>();
+		maxPriorityQueue.add(0);	// Element at index 0 is some placer value. We don't need index 0.
+	}
+	public void initializeQueue(int elem)
+	{
+		maxPriorityQueue.add(elem);
+	}
+
+	public void setUpMaxHeap()
+	{
+		int N = maxPriorityQueue.size() - 1; // maxHeapArray[1..N] which excludes 0.
+		buildMaxHeap(N);
+	}
+	private void buildMaxHeap(int N)
+	{
+		for(int i = N/2; i >= 1; i--)
+			maxHeapify(i,N);
+	}
+	private void maxHeapify(int nodeIndex, int N)
+	{
+		int leftChildIndex = 2 * nodeIndex;
+		int rightChildIndex = 2 * nodeIndex + 1;
+
+		int largestNodeIndex = nodeIndex;
+
+		if(leftChildIndex <= N && maxPriorityQueue.get(leftChildIndex) > maxPriorityQueue.get(nodeIndex))
+			largestNodeIndex = leftChildIndex;
+
+		if(rightChildIndex <= N && maxPriorityQueue.get(rightChildIndex) > maxPriorityQueue.get(largestNodeIndex))
+			largestNodeIndex = rightChildIndex;
+
+		if(largestNodeIndex != nodeIndex)
+		{
+			swap(nodeIndex,largestNodeIndex);
+			maxHeapify(largestNodeIndex,N);
+		}
+	}
+	private void swap(int nodeIndex, int largestNodeIndex)
+	{
+		Integer temp = (Integer) maxPriorityQueue.get(nodeIndex);
+		maxPriorityQueue.set(nodeIndex,maxPriorityQueue.get(largestNodeIndex));
+		maxPriorityQueue.set(largestNodeIndex,temp);
+	}
+
+	public void addToQueue(int elemToAdd)
+	{
+		maxPriorityQueue.add(elemToAdd);
+		setElemInRightPlace();
+	}
+	private void setElemInRightPlace()
+	{
+		int i = maxPriorityQueue.size()-1;
+		while(i > 1 && maxPriorityQueue.get(i/2) < maxPriorityQueue.get(i)) // Parent < Child
+		{
+			swap(i/2,i);
+			i = i/2;
+		} 
+	}
+
+	public Integer getMaxInQueue()
+	{
+		return (Integer) maxPriorityQueue.get(1);
+	}
+}
+
+public class MaxInQueue
+{
+	public static void main(String[] args) 
+	{
+		Scanner in = new Scanner(System.in);
+		int N = in.nextInt();
+
+		ImplementMaxQueue obj = new ImplementMaxQueue();
+
+		for(int i = 0; i < N; i++)
+			obj.initializeQueue(in.nextInt());	
+
+		obj.setUpMaxHeap();
+
+		int numQueries = in.nextInt();
+		while(numQueries > 0)
+		{
+			int queryType = in.nextInt();
+
+			switch(queryType)
+			{
+				case 1:
+
+					int elemToAdd = in.nextInt();
+					obj.addToQueue(elemToAdd);
+					
+					break;
+
+				case 2:
+
+					Integer max = obj.getMaxInQueue();
+					print(max);
+
+					break;
+			}
+
+			numQueries--;
+		}
+	}
+
+	public static void print(Integer max)
+	{
+		System.out.println(max);
+	}
+}
