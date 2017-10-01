@@ -1,0 +1,45 @@
+import java.util.*;
+
+class Solution
+{
+	Set<Character> characters;
+
+	public Solution()
+	{
+		characters = new HashSet<Character>();
+	}
+
+	public int lengthOfLongestSubstring(String input)
+	{
+        int subStringLength = 0;
+        int maxLength = 0;
+        
+        int beginWindow = 0;
+        
+		for(int i = 0; i < input.length(); i++)
+		{
+			Character ch = input.charAt(i);
+                
+            if(!characters.contains(ch))
+            {
+                characters.add(ch);
+                subStringLength += 1;
+            }
+            else
+            {
+                if(maxLength < subStringLength)
+                    maxLength = subStringLength;
+                
+                subStringLength = 0;
+                characters.clear();
+                
+                beginWindow += 1; // using a sliding window and shifting it to the right by 1 position at a time
+                i = beginWindow-1; // since we next see i++ which will then make i equal to beginWindow which we want
+            }
+        }
+        if(characters.size() > maxLength)
+            maxLength = characters.size();
+        
+        return maxLength;
+    }
+}
