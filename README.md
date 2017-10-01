@@ -1,2 +1,2 @@
 # Competitive-Programming-Codes
-All codes from Hackerrank, Hackerearth and other competitive programming websites.
+All codes from Hackerrank, Hackerearth, Leetcode and other competitive programming websites.
