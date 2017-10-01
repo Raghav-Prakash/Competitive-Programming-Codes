@@ -36,7 +36,7 @@ class Solution
                 beginWindow += 1; // using a sliding window and shifting it to the right by 1 position at a time
                 i = beginWindow-1; // since we next see i++ which will then make i equal to beginWindow which we want
             }
-        }
+		}
         if(characters.size() > maxLength)
             maxLength = characters.size();
         
