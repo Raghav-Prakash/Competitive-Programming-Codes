@@ -1,0 +1,25 @@
+class Solution:
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        
+        x = str(x)
+        res = ""
+        
+        if(x[0] == '-'):
+            res += '-'
+            res += x[len(x)-1:0:-1]
+        elif(x[(len(x)-1)] == '0'):
+            res += x[len(x)-2::-1]
+        else:
+            res += x[::-1]
+            
+        lower_bound = -2**31
+        upper_bound = 2**31
+            
+        if(int(res) < lower_bound or int(res) > upper_bound):
+            return 0
+            
+        return int(res)
