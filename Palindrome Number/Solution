@@ -1,0 +1,17 @@
+class Solution:
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        
+        x = str(x)
+        if(x[0] == '-'):
+            return False
+        
+        rev_x = x[::-1]
+        
+        if(x == rev_x):
+            return True
+        return False
+        
