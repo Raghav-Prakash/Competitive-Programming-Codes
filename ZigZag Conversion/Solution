@@ -1,0 +1,59 @@
+class Solution 
+{
+    public String convert(String s, int numRows) 
+    {
+        if(s.length() <= numRows) return s;
+        
+        int numColumns = s.length();
+        
+        char[][] zigzag = new char[numRows][numColumns];
+        zigzag = fill(zigzag,numRows,numColumns,'-');
+        
+        int rowIndex = 0;
+        int colIndex = 0;
+        int step = 1;
+        
+        for(int i = 0; i < s.length(); i++)
+        {
+            if(rowIndex == 0) step = 1;
+            if(rowIndex == numRows-1) step = -1;
+            
+            zigzag[rowIndex][colIndex] = s.charAt(i);
+            
+            if(step == 1)
+                rowIndex++;
+            
+            if(step == -1 && !(rowIndex == 0 && rowIndex == numRows-1))
+            {
+                colIndex++;
+                rowIndex--;
+            }
+            
+            else
+                colIndex++;
+        }
+        
+        return getZigZagString(zigzag,numRows,numColumns);
+    }
+    
+    public char[][] fill(char[][] zigzag, int rows, int cols, char filler)
+    {
+        for(int i = 0; i < rows; i++)
+            for(int j = 0; j < cols; j++)
+                zigzag[i][j] = filler;
+        
+        return zigzag;
+    }
+    
+    public String getZigZagString(char[][] zigzag, int rows, int columns)
+    {
+        StringBuilder result = new StringBuilder();
+        
+        for(int i = 0; i < rows; i++)
+            for(int j = 0; j < columns; j++)
+                if(zigzag[i][j] != '-')
+                    result.append(zigzag[i][j]);
+        
+        return result.toString();
+    }
+}
