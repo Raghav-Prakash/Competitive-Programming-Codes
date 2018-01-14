@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+
+public class TriangleType {
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int numTests = Integer.parseInt(br.readLine());
+		String triangleDimensions = "";
+		
+		while(numTests-- > 0) {
+			triangleDimensions = br.readLine();
+			String[] dimensions = triangleDimensions.split(" ");
+			
+			int side1 = Integer.parseInt(dimensions[0]);
+			int side2 = Integer.parseInt(dimensions[1]);
+			int side3 = Integer.parseInt(dimensions[2]);
+			
+			String triangleType = getTriangleType(side1,side2,side3);
+			
+			printResult(triangleType);
+		}
+	}
+	
+	public static void printResult(String type) {
+		System.out.println(type);
+	}
+	
+	public static String getTriangleType(int side1, int side2, int side3) {
+		
+		String result = "";
+		
+		if(notTriangle(side1,side2,side3)) 
+			return "Not a Triangle";
+		
+		Set<Integer> set = new HashSet<Integer>();
+		set.add(side1);
+		set.add(side2);
+		set.add(side3);
+		
+		if(set.size() == 1) result = "Equilateral";
+		if(set.size() == 2) result = "Isosceles";
+		if(set.size() == 3) result = "Scalene";
+		
+		return result;
+	}
+	
+	public static Boolean notTriangle(int side1, int side2, int side3) {
+		if((side1 + side2 <= side3) || 
+		   (side1 + side3 <= side2) || 
+		   (side2 + side3 <= side1))
+			return true;
+		
+		return false;
+	}
+}
