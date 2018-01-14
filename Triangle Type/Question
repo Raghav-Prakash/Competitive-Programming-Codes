@@ -1,0 +1,24 @@
+Given 3 numbers, get the triangle type - Equilateral, Isosceles or Scalene. If it's not a triangle, print "Not a Triangle".
+
+Input: 
+First line contains the number of inputs 'n'. The next 'n' inputs each contain three numbers representing the lengths of the three sides of the triangle (or of any 3-sided figure since it may not be a triangle). 
+
+Output:
+Print the type of the triangle if it is one or if not, print "Not a Triangle"
+
+Example:
+
+Input:
+5
+34 35 36
+36 36 70
+81 72 4
+85 85 85
+36 36 80
+
+Output:
+Scalene
+Isosceles
+Not a Triangle
+Equilateral
+Not a Triangle
